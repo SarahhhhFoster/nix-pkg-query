@@ -17,13 +17,13 @@ Clone the repository and make the script executable:
 ```bash
 git clone https://github.com/yourusername/nix-search.git
 cd nix-search
-chmod +x auth_token.py
+chmod +x nix-pkg-query.py
 ```
 ## Usage
 Basic usage:
 
 ```bash
-./auth_token.py QUERY
+./nix-pkg-query.py QUERY
  ```
 
 ### Options
@@ -36,25 +36,25 @@ Basic usage:
 Search for Python packages:
 
 ```bash
-./auth_token.py python
+./nix-pkg-query.py python
  ```
 
 Search for VSCode on Linux:
 
 ```bash
-./auth_token.py -a x86_64-linux vscode
+./nix-pkg-query.py -a x86_64-linux vscode
  ```
 
 Show 20 results on page 2 for GCC:
 
 ```bash
-./auth_token.py -n 20 -p 2 gcc
+./nix-pkg-query.py -n 20 -p 2 gcc
  ```
 
 Output just package names for Firefox:
 
 ```bash
-./auth_token.py --plain firefox
+./nix-pkg-query.py --plain firefox
  ```
 
 ## Integration with other tools
@@ -62,10 +62,10 @@ The plain output mode is useful for piping results to other commands:
 
 ```bash
 # Install the first matching package
-nix-env -iA nixpkgs.$(./auth_token.py --plain firefox)
+nix-env -iA nixpkgs.$(./nix-pkg-query.py --plain firefox)
 
 # List all matching packages and select with fzf
-./auth_token.py -n 50 --plain python | fzf | xargs -I{} nix-env -iA nixpkgs.{}
+./nix-pkg-query.py -n 50 --plain python | fzf | xargs -I{} nix-env -iA nixpkgs.{}
  ```
 
 ## How it works
