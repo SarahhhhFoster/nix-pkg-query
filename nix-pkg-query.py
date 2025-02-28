@@ -179,12 +179,13 @@ def search_packages(query, channel="24.11", size=50, from_index=0, platform=None
     response = requests.post(url, json=payload, headers=headers)
     return response.json()
 
-def print_results_table(results):
+def print_results_table(results, platform=None):
     """
     Print search results as a formatted table with package names, versions, and descriptions.
     
     Args:
         results: The search results dictionary returned by search_packages()
+        platform: The platform used for filtering (if specified)
     """
     hits = results.get('hits', {}).get('hits', [])
     total_count = results.get('hits', {}).get('total', {}).get('value', 0)
@@ -224,7 +225,7 @@ def print_results_table(results):
         print(f"{name:{max_name_length}} | {version:{max_version_length}} | {description}")
     
     # Print platform information
-    arch = get_system_arch()
+    arch = platform if platform else get_system_arch()
     print(f"\nResults filtered for platform: {arch}")
 
 def main():
@@ -288,7 +289,7 @@ Examples:
             if name:
                 print(name)
     else:
-        print_results_table(results)
+        print_results_table(results, args.arch)
 
 if __name__ == "__main__":
     main()
